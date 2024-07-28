@@ -271,7 +271,7 @@ for bam in $(ls ${RECAL_BAM} | grep -vE "qualimap|bai|mosdepth"); do
     echo "${BAM}"
     MOSDEPTH_PRECISION=5 mosdepth \
         --threads 40 \
-        --fasta "/mnt/rdisk/dminh/Cauris/refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/Sequence/WholeGenomeFasta/genome.fa" \
+        --fasta "refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/Sequence/WholeGenomeFasta/genome.fa" \
         -n --fast-mode --by 414 \
         "${BAM_COV}/${BAM}" \
         "${RECAL_BAM}/${bam}"

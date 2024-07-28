@@ -40,27 +40,27 @@ tabix -p vcf "${ann}/cauris.snp.filtered.PEKT.ann.vcf.gz"
 
 # Filtering variants that PASS hard filtering and overall DP > 30
 bcftools view -H cauris.snp.filtered.PEKT.ann.vcf.gz | wc -l
-bcftools filter -i 'INFO/DP >= 30 & FILTER == "PASS"' "./SNPs/annotation/marked_filtered/cauris.snp.filtered.PEKT.ann.vcf.gz" > "./SNPs/annotation/marked_filtered/filtered/cauris.snps.PASS.DP30.PEKT.ann.vcf"
+bcftools filter -i 'INFO/DP >= 30 & FILTER == "PASS"' "cauris.snp.filtered.PEKT.ann.vcf.gz" > "cauris.snps.PASS.DP30.PEKT.ann.vcf"
 
 # Genotype filtering (based on FORMAT column - masking the GT)
 # gzip -c -d "Cauris_merged_output/Annotation/cauris.snp.filtered.PEKT.ann.vcf.gz" > "Cauris_merged_output/Annotation/cauris.snp.filtered.PEKT.ann.vcf"
 
 filterGatkGenotypes="./bin/filterGatkGenotypes.py"
-python3 ${filterGatkGenotypes} "./SNPs/annotation/marked_filtered/filtered/cauris.snps.PASS.DP30.PEKT.ann.vcf" \
+python3 ${filterGatkGenotypes} "cauris.snps.PASS.DP30.PEKT.ann.vcf" \
                                 --min_GQ "50" \
                                 --keep_GQ_0_refs \
                                 --min_percent_alt_in_AD "0.8" \
                                 --min_total_DP "30" \
                                 --keep_all_ref \
-                                > "./SNPs/annotation/marked_filtered/filtered/cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf"
+                                > "cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf"
 
 # For loop for all pairwise comparisons against strain_48 (multi-samples vcf is filtered with "PASS" hard filtering, overall DP >= 30 and masked genotype filtering)
 strains=("strain_185" "strain_188" "strain_189" "strain_191")
 for strain in "${strains[@]}"; do
     echo "${strain}"
     type="${strain/strain_/}"
-    bcftools view -s "${strain},strain_48" "filtered/cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf" | bcftools filter -i 'GT="0"' - | bcftools query -f 'GT=[%GT]\n' - | sort | uniq -c
-    bcftools view -s "${strain},strain_48" "filtered/cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf" | \
+    bcftools view -s "${strain},strain_48" "cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf" | bcftools filter -i 'GT="0"' - | bcftools query -f 'GT=[%GT]\n' - | sort | uniq -c
+    bcftools view -s "${strain},strain_48" "cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf" | \
     bcftools filter -i 'GT="0"' - | \
     awk '{
         if (/^#/) {
@@ -69,7 +69,7 @@ for strain in "${strains[@]}"; do
         else if ((substr($10,1,1) != substr($11,1,1)) && (substr($10,1,1) != "\.") && (substr($11,1,1) != "\.")) {
             print $0
         }
-    }' > "./filtered/cauris_${type}_vs_48_filtered_PEKT.ann.vcf"
+    }' > "cauris_${type}_vs_48_filtered_PEKT.ann.vcf"
 done
 
 # Subset regions of interest

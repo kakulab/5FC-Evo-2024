@@ -1,0 +1,5 @@
+strain_185.markDups.bam strain_185
+strain_188.markDups.bam strain_188
+strain_189.markDups.bam strain_189
+strain_191.markDups.bam strain_191
+strain_48.markDups.bam strain_48
