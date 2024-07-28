@@ -78,4 +78,5 @@ for file in ./*_48*.ann.vcf; do
 done
 
 # Selected SNPs
-bcftools view -T regions.tsv "cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf" | grep -v "^##" | awk 'BEGIN{FS=OFS="\t"};{sub(/#/, "", $1); print $1,$2,$4,$5,$6,$7,$10,$11,$12,$13,$14}' > "cauris.snps.of.interest.tsv"
+bcftools view -T "regions.tsv" "cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf.gz" | awk 'BEGIN{FS=OFS="\t"};{sub(/#/, "", $1); print $0}' > "cauris.snps.of.interest.ann.vcf"
+bcftools view -T regions.tsv "cauris.snps.PASS.DP30.genotypefiltered.PEKT.ann.vcf.gz" | grep -v "^##" | awk 'BEGIN{FS=OFS="\t"};{sub(/#/, "", $1); print $1,$2,$4,$5,$6,$7,$10,$11,$12,$13,$14}' > "cauris.snps.of.interest.tsv"

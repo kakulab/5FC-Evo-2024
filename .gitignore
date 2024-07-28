@@ -1,8 +1,9 @@
 manuscripts/
 materials/
 output_comparisons/
-refs/*
-!refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/VCF
+refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/Notes.txt
+refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/Annotation/
+refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/Sequence/
 refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/VCF/*
 !refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/VCF/B11221_CA05_contigs_rename.vcf.gz
 !refs/Candida_auris_B8441/Genbank/Cand_auris_B8441_V2/VCF/B11245_CA06_contigs_rename.vcf.gz
